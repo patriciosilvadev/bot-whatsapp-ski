@@ -14,7 +14,7 @@ async function start(client)  {
     if (message.body === '!help') {
       client
         .sendText(`${message.from}`, 
-        '*[BOT}* \n \n !sticker pra criar uma figurinha digite *!sticker* \n \n !sticker pra criar uma figurinha animada digite *!gifsticker*'
+        '*[BOT}* \n \n  Para criar uma figurinha digite *!sticker* \n \n Para criar uma figurinha animada digite *!gifsticker*'
         )
         .then(() => {
           console.log(message.body);
