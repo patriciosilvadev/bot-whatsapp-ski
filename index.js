@@ -14,7 +14,7 @@ async function start(client)  {
     if (message.body === '!help') {
       client
         .sendText(`${message.from}`, 
-        '*[BOT}* \n \n  Para criar uma figurinha digite *!sticker* \n \n Para criar uma figurinha animada digite *!gifsticker*'
+        '*[BOT]* \n \n  Para criar uma figurinha digite *!sticker* \n \n Para criar uma figurinha animada digite *!gifsticker*'
         )
         .then(() => {
           console.log(`${message.sender.pushname}:`, message.body);
@@ -40,12 +40,11 @@ async function start(client)  {
       if (message.caption === '!sticker') {
         const buffer = await client.decryptFile(message);
         const fileName = `./files/img-sticker_${message.sender.pushname}+${message.sender.id}.${mime.extension(message.mimetype)}`;
-        console.log('mensagem:', message);
         await fs.writeFile(fileName, buffer, (err) => {
           if (err) throw err;
           client
           .sendImageAsSticker(message.chatId, fileName)
-          .then((result) => {
+          .then(() => {
             console.log(`${message.sender.pushname}:`, 'image');
           })
         });
@@ -53,56 +52,46 @@ async function start(client)  {
     }
 
     // Gif sticker
-    if (message.mimetype === 'image/gif') {
-      const buffer = await client.decryptFile(message);
-      const fileName = `./files/img-gif-sticker_${message.sender.pushname}+${message.sender.id}.${mime.extension(message.mimetype)}`;
-      
-      await fs.writeFile(fileName, buffer, () => {
-        client
-        .sendImageAsStickerGif(message.chatId, fileName)
-        .then(() => {
-          console.log(`${message.sender.pushname}:`, 'gif');
-        })
-      }).catch((err) => {
-        throw err;
-      });
-    }
-
-    // Gif sticker
     if (message.caption === '!gifsticker') {
       const buffer = await client.decryptFile(message);
-      const fileName = `./files/img-gif-sticker_${message.sender.pushname}+${message.sender.id}.${mime.extension(message.mimetype)}`;
-      const tmpFileName = `./files/img-gif-sticker_tmp_${message.sender.pushname}+${message.sender.id}.${mime.extension('image/gif')}`;
+      const videoFile = `./files/img-gif-sticker_${message.sender.pushname}+${message.sender.id}.${mime.extension(message.mimetype)}`;
+      const gifFile = `./files/img-gif-sticker_tmp_${message.sender.pushname}+${message.sender.id}.${mime.extension('image/gif')}`;
 
       const messageSend = () => {
         client
-        .sendImageAsStickerGif(message.chatId, tmpFileName)
-        .then(() => {
-          console.log(`${message.sender.pushname}:`, 'gif');
-          
+        .sendImageAsStickerGif(message.chatId, gifFile)
+        .then((result) => {
+          console.log('Enviado para: ', result.to.formattedName);
         })
       }
+
       const convert = (input, output) => {
         ffmpeg(input)
           .output(output)
           .size('256x256')
           .on('end', () => {                    
-            client
-            .sendText(`${message.from}`, '*[BOT]* Espera 10 segundinhos ae, corno')
+            console.log('convert: Convertendo video pra gif');
           }).on('error', (err) => {
-            console.log('error: ', err.code, err.msg);
+            console.log('convert_INSIDE_FUNCTION_ERROR: ', err);
           }).run();
       }
-      await fs.writeFileSync(tmpFileName, buffer, (err) => {
-        if(err) throw err;
+
+      // Escrevendo gif com o Buffer
+      await fs.writeFileSync(gifFile, buffer, (err) => {
+        if(err) console.log('write_gif_ERROR:', err);
       });
 
-      fs.writeFile(fileName, buffer, (err) => {
-        if(err) throw err;
+      // Escrevendo mp4 com o Buffer
+      fs.writeFile(videoFile, buffer, async (err) => {
+        if(err) console.log('write_mp4_ERROR:', err);
 
-        convert(fileName, tmpFileName)
+        // Convertendo
+        await convert(videoFile, gifFile).catch((err) => { if(err) console.log('Convert_ERROR:', err) });
+
+        // Esperando 3 segundos e enviando o gif
         setTimeout(messageSend, 3000);
       });
+
     }
 	});
 }
