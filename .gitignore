@@ -102,3 +102,10 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Medias
+.jpg
+.jpeg
+.mp4
+.gif
+.json

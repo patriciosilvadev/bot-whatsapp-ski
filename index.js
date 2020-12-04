@@ -46,7 +46,7 @@ async function start(client)  {
           client
           .sendImageAsSticker(message.chatId, fileName)
           .then((result) => {
-            console.log(`${message.sender.pushname}:`, message.body);
+            console.log(`${message.sender.pushname}:`, 'image');
           })
         });
       }
@@ -61,7 +61,7 @@ async function start(client)  {
         client
         .sendImageAsStickerGif(message.chatId, fileName)
         .then(() => {
-          console.log(`${message.sender.pushname}:`, message.body);
+          console.log(`${message.sender.pushname}:`, 'gif');
         })
       }).catch((err) => {
         throw err;
@@ -78,7 +78,7 @@ async function start(client)  {
         client
         .sendImageAsStickerGif(message.chatId, tmpFileName)
         .then(() => {
-          console.log(`${message.sender.pushname}:`, message.body);
+          console.log(`${message.sender.pushname}:`, 'gif');
           
         })
       }
