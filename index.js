@@ -17,7 +17,7 @@ async function start(client)  {
         '*[BOT}* \n \n  Para criar uma figurinha digite *!sticker* \n \n Para criar uma figurinha animada digite *!gifsticker*'
         )
         .then(() => {
-          console.log(message.body);
+          console.log(`${message.sender.pushname}:`, message.body);
         })
         .catch((erro) => {
           console.error('Erro ao enviar mensagem: ', erro);
@@ -28,7 +28,7 @@ async function start(client)  {
       client
         .sendText(`${message.from}`, '*[BOT] Renan é o caralho.*')
         .then(() => {
-          console.log(message);
+          console.log(`${message.sender.pushname}:`, message.body);
         })
         .catch((erro) => {
           console.error('Erro ao enviar mensagem: ', erro);
@@ -46,7 +46,7 @@ async function start(client)  {
           client
           .sendImageAsSticker(message.chatId, fileName)
           .then((result) => {
-            console.log('Result: ', result);
+            console.log(`${message.sender.pushname}:`, message.body);
           })
         });
       }
@@ -60,8 +60,8 @@ async function start(client)  {
       await fs.writeFile(fileName, buffer, () => {
         client
         .sendImageAsStickerGif(message.chatId, fileName)
-        .then((result) => {
-          console.log('Result: ', result);
+        .then(() => {
+          console.log(`${message.sender.pushname}:`, message.body);
         })
       }).catch((err) => {
         throw err;
@@ -77,8 +77,9 @@ async function start(client)  {
       const messageSend = () => {
         client
         .sendImageAsStickerGif(message.chatId, tmpFileName)
-        .then((result) => {
-          console.log('Result: ', result);
+        .then(() => {
+          console.log(`${message.sender.pushname}:`, message.body);
+          
         })
       }
       const convert = (input, output) => {
