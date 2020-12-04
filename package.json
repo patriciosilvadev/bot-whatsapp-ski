@@ -16,5 +16,9 @@
     "gm": "^1.23.1",
     "graphicsmagick": "0.0.1",
     "venom-bot": "^2.1.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.14.0",
+    "eslint-config-google": "^0.14.0"
   }
 }
