@@ -123,7 +123,7 @@ async function start(client) {
     }
 
     if (message.body === 'Léo' || message.body === 'Leo') {
-      customMessage('Léo é o gordo todo fodido do grupo.\n Ele é tão gordo que o DDD muda, quando ele troca o celular de bolso');
+      customMessage('Léo é o gordo todo fodido do grupo.*\n *Ele é tão gordo que o DDD muda, quando ele troca o celular de bolso');
     }
 
     if (message.body === 'Rafael') {
