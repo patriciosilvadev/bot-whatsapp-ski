@@ -53,6 +53,7 @@ async function start(client) {
       }
     }
 
+    // Gif sticker
     if (message.caption === '!gifsticker') {
       const buffer = await client.decryptFile(message);
 
