@@ -133,44 +133,48 @@ async function start(client) {
 
     /*  Adminstration and security  */
 
-    // Profile config
-    if (message.body.substring(17, 0) === `!setProfileStatus` && message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
-      await client.setProfileStatus(message.body.substring(18));
-    }
+    if (message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
+      // Profile config
+      if (message.isMedia === false) {
+        if (message.body.substring(17) === `!setProfileStatus`) {
+          await client.setProfileStatus(message.body.substring(18));
+        }
 
-    if (message.body.substring(15, 0) === `!setProfileName` && message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
-      await client.setProfileName(message.body.substring(16));
-    }
+        if (message.body.substring(15) === `!setProfileName`) {
+          await client.setProfileName(message.body.substring(16));
+        }
+      }
 
-    if (message.caption === `!setProfilePic` && message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
-      const buffer = await client.decryptFile(message);
-      const profilePic = `./files/bot-profile-img-by${message.sender.pushname}+${message.sender.id}.${mime.extension(message.mimetype)}`;
+      if (message.caption === `!setProfilePic`) {
+        const buffer = await client.decryptFile(message);
+        const profilePic = `./files/bot-profile-img-by${message.sender.pushname}+${message.sender.id}.${mime.extension(message.mimetype)}`;
 
-      await fs.writeFile(profilePic, buffer, (err) => {
-        if (err) console.log('profilePic_ERROR:', err);
-        client.setProfilePic(profilePic);
-      });
-    }
+        await fs.writeFile(profilePic, buffer, (err) => {
+          if (err) console.log('profilePic_ERROR:', err);
+          client.setProfilePic(profilePic);
+        });
+      }
 
-    // Device security
-    if (message.body === `!getBatteryLevel` && message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
-      await client.getBatteryLevel();
-    }
+      // Device security
+      if (message.body === `!getBatteryLevel`) {
+        await client.getBatteryLevel();
+      }
 
-    if (message.body === `!kill` && message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
-      await client.killServiceWorker();
-    }
+      if (message.body === `!kill`) {
+        await client.killServiceWorker();
+      }
 
-    if (message.body === `!restart` && message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
-      await client.restartService();
-    }
+      if (message.body === `!restart`) {
+        await client.restartService();
+      }
 
-    if (message.body === `!device` && message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
-      await client.getHostDevice();
-    }
+      if (message.body === `!device`) {
+        await client.getHostDevice();
+      }
 
-    if (message.body === `!kill` && message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
-      await client.killServiceWorker();
+      if (message.body === `!kill`) {
+        await client.killServiceWorker();
+      }
     }
   });
 }
