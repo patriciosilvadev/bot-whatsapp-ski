@@ -12,9 +12,11 @@
     "ffmpeg": "0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "gifify": "^2.4.3",
+    "gifski": "^0.7.1",
     "gify": "^0.2.0",
     "gm": "^1.23.1",
     "graphicsmagick": "0.0.1",
+    "puppeteer-lottie": "^1.1.2",
     "venom-bot": "^2.1.2"
   },
   "devDependencies": {
