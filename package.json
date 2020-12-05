@@ -2,11 +2,12 @@
   "name": "bot-venom",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "vigsoft410",
   "license": "ISC",
   "dependencies": {
     "ffmpeg": "0.0.4",
