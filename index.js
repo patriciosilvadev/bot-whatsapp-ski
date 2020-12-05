@@ -14,7 +14,7 @@ async function start(client) {
     // Mensagens personalizadas layout
     const customMessage = (content) => {
       client
-          .reply(message.from, `*[BOT] ${content}`, message.id)
+          .reply(message.from, `*[BOT] ${content}*`, message.id)
           .then(() => {
             console.log(`${message.sender.pushname}:`, message.body);
           })
