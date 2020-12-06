@@ -6,6 +6,11 @@ const mime = require('mime-types');
 const ffmpeg = require('fluent-ffmpeg');
 const http = require('http');
 
+http.createServer( (request, response) => {
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.end('Hello World\n');
+}).listen(process.env.PORT);
+
 venom
     .create(
         'sessionName',
@@ -38,10 +43,7 @@ venom
     )
     .then((client) => start(client));
 
-http.createServer( (request, response) => {
-  response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.end('Hello World\n');
-}).listen(process.env.PORT);
+
 
 async function start(client) {
   client.onMessage(async (message) => {
