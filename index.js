@@ -4,10 +4,44 @@ const venom = require('venom-bot');
 const fs = require('fs');
 const mime = require('mime-types');
 const ffmpeg = require('fluent-ffmpeg');
+const http = require('http');
 
 venom
-    .create()
+    .create(
+        'sessionName',
+        (base64Qr, asciiQR, attempts, urlCode) => {
+          console.log(asciiQR); // Optional to log the QR in the terminal
+          const matches = base64Qr.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+          const response = {};
+
+          if (matches.length !== 3) {
+            return new Error('Invalid input string');
+          }
+          response.type = matches[1];
+          // eslint-disable-next-line new-cap
+          response.data = new Buffer.from(matches[2], 'base64');
+
+          const imageBuffer = response;
+          require('fs').writeFile(
+              'out.png',
+              imageBuffer['data'],
+              'binary',
+              function(err) {
+                if (err != null) {
+                  console.log(err);
+                }
+              },
+          );
+        },
+        undefined,
+        {logQR: false},
+    )
     .then((client) => start(client));
+
+http.createServer( (request, response) => {
+  response.writeHead(200, {'Content-Type': 'text/plain'});
+  response.end('Hello World\n');
+}).listen(process.env.PORT);
 
 async function start(client) {
   client.onMessage(async (message) => {

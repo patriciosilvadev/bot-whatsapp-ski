@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node test.js"
+    "test": "node index.js"
   },
   "author": "vigsoft410",
   "license": "ISC",
