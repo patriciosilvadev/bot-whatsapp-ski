@@ -23,11 +23,27 @@ async function start(client) {
           });
     };
 
+    // Audio messages layout
+    const audioMessage = (nome, extension, reply) => {
+      if (message.body === `#${nome}`) {
+        client.sendFile(
+            message.chatId,
+            `./files/audios/${nome}.${extension}`,
+            `${nome}`,
+        ).then(() => {
+          if (reply) customMessage('Pronto, puta!');
+          console.log(`${message.sender.pushname}:`, `Audio ${nome}`);
+        }).catch((err) => {
+          console.error('AudioMessage_ERROR: ', err);
+        });
+      }
+    };
+
     // Help menssage
     if (message.body === '!help') {
       client
           .sendText(`${message.from}`,
-              '*[BOT]* \n \n  Para criar uma figurinha digite *!sticker* \n \n Para criar uma figurinha animada digite *!gifsticker*',
+              '*[BOT]* \n \nPara criar uma figurinha digite *!sticker* \n \nPara criar uma figurinha animada digite *!gifsticker* \n\nPara enviar audios de zoação do grupo use o *"#"*',
           )
           .then(() => {
             console.log(`${message.sender.pushname}:`, message.body);
@@ -131,9 +147,15 @@ async function start(client) {
       customMessage('Rafael ou tê oitocentos, é o irmão afeminado e fracassado do Renan.');
     }
 
+    // Audio messsages using #
+    // 1. Nome do áudio
+    // 2. Extensão do arquivo
+    // 3. Resposta => Se for setado "true" o bot irá responder com uma mensagem, se for "false" ele não responderá
+    audioMessage('desafiando', 'ogg', false);
+    audioMessage('mijao', 'mpeg', true);
+
 
     /*  Adminstration and security  */
-
     if (message.sender.id === `${'35998402227' || '21966944292'}@c.us`) {
       // Profile config
       if (message.isMedia === false) {
