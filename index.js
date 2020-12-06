@@ -70,7 +70,7 @@ async function start(client) {
     }
 
     // Gif sticker
-    if (message.caption === '!gifsticker') {
+    if (message.caption === '!gif') {
       const buffer = await client.decryptFile(message);
 
       const videoFile = `./files/img-gif-sticker_${message.sender.pushname}+${message.sender.id}.${mime.extension(message.mimetype)}`;
@@ -96,8 +96,11 @@ async function start(client) {
       const messageSend = () => {
         client
             .sendImageAsStickerGif(message.chatId, gifFile)
-            .then((result) => {
-              console.log('Result: ', result);
+            .then(() => {
+              console.log('Result: ', 'Gifsticker');
+            }).catch((err) => {
+              console.log('saveVideo_INSIDE_FUNCTION_ERROR: ', err);
+              customMessage('Erro ao criar sticker. Manda um gif curto, MACACO!');
             });
       };
 
@@ -111,12 +114,12 @@ async function start(client) {
 
       // Salvando o gif
       await fs.writeFileSync(gifFile, buffer, (err) => {
-        if (err) throw err;
+        if (err) console.log('saveGif_INSIDE_FUNCTION_ERROR: ', err);
       });
 
       // Salvando o video
       fs.writeFile(videoFile, buffer, (err) => {
-        if (err) throw err;
+        if (err) console.log('saveVideo_INSIDE_FUNCTION_ERROR: ', err);
         try {
           convert(videoFile, gifFile);
         } catch (err) {
