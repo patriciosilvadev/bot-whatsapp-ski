@@ -41,16 +41,7 @@ async function start(client) {
 
     // Help menssage
     if (message.body === '!help') {
-      client
-          .sendText(`${message.from}`,
-              '*[BOT]* \n \nPara criar uma figurinha digite *!sticker* \n \nPara criar uma figurinha animada digite *!gifsticker* \n\nPara enviar audios de zoação do grupo use o *"#"*',
-          )
-          .then(() => {
-            console.log(`${message.sender.pushname}:`, message.body);
-          })
-          .catch((erro) => {
-            console.error('Erro ao enviar mensagem: ', erro);
-          });
+      customMessage('[HELP]* \n\nPara criar uma figurinha digite *!sticker* \n \nPara criar uma figurinha animada digite *!gif* \n\nPara enviar audios de zoação do grupo use o *"#"');
     }
 
     // Image sticker
